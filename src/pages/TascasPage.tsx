@@ -22,6 +22,7 @@ function VenueCard({ tasca, onView }: { tasca: Tasca; onView: () => void }) {
   const category = tasca.category || tasca.highlights?.find((item) => item.title)?.title || "";
   const benefit = tasca.roundPrize && tasca.roundPrize !== "Por confirmar" ? tasca.roundPrize : "";
   const address = tasca.address && tasca.address !== "Por confirmar" ? tasca.address : "";
+  const garrisonBanner = tasca.id === "venue-garrison" || tasca.slug === "garrison-barber-society";
 
   return (
     <article
@@ -32,21 +33,29 @@ function VenueCard({ tasca, onView }: { tasca: Tasca; onView: () => void }) {
         className="flex min-w-0 flex-col items-center rounded-t-[20px] bg-[#000000] px-4 py-6"
         style={{ borderBottom: "0.5px solid #3a3320" }}
       >
-        <div className="relative flex w-full min-w-0 items-center justify-center">
-          <span aria-hidden="true" className="pointer-events-none absolute left-0 top-1/2 h-px w-8 -translate-y-1/2 bg-[#DDB04A]/50" />
-          <span aria-hidden="true" className="pointer-events-none absolute right-0 top-1/2 h-px w-8 -translate-y-1/2 bg-[#DDB04A]/50" />
-          {tasca.logoUrl ? (
-            <img
-              src={tasca.logoUrl}
-              alt=""
-              className="relative block h-[150px] w-auto min-w-0 max-w-[85%] shrink object-contain sm:h-[180px]"
-            />
-          ) : (
-            <span className="relative flex h-[150px] items-center justify-center text-[28px] font-medium text-white sm:h-[180px]">
-              {venueInitials(tasca.name)}
-            </span>
-          )}
-        </div>
+        {garrisonBanner ? (
+          <img
+            src="/allies/garrison-banner.png"
+            alt=""
+            className="mx-auto block h-auto max-h-[200px] w-full object-contain"
+          />
+        ) : (
+          <div className="relative flex w-full min-w-0 items-center justify-center">
+            <span aria-hidden="true" className="pointer-events-none absolute left-0 top-1/2 h-px w-8 -translate-y-1/2 bg-[#DDB04A]/50" />
+            <span aria-hidden="true" className="pointer-events-none absolute right-0 top-1/2 h-px w-8 -translate-y-1/2 bg-[#DDB04A]/50" />
+            {tasca.logoUrl ? (
+              <img
+                src={tasca.logoUrl}
+                alt=""
+                className="relative block h-[150px] w-auto min-w-0 max-w-[85%] shrink object-contain sm:h-[180px]"
+              />
+            ) : (
+              <span className="relative flex h-[150px] items-center justify-center text-[28px] font-medium text-white sm:h-[180px]">
+                {venueInitials(tasca.name)}
+              </span>
+            )}
+          </div>
+        )}
         <h3 className="mt-2 max-w-full text-center text-[15px] font-medium leading-tight text-white">{tasca.name}</h3>
         {category ? <p className="mt-0.5 text-center text-[11px] font-medium text-[#9aa4ad]">{category}</p> : null}
         <span className="mt-2 rounded-[99px] bg-[#b8f53a] px-2 py-0.5 text-[11px] font-medium text-[#0b0f13]">Aliado oficial</span>
