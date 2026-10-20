@@ -1,14 +1,16 @@
 import type { ReactNode } from "react";
 
-export function BackButton({ onClick, label = "Volver" }: { onClick: () => void; label?: string }) {
+export function BackButton({ onClick, label = "Volver", strong = false }: { onClick: () => void; label?: string; strong?: boolean }) {
   return (
     <button
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[0_4px_12px_rgba(80,40,10,0.08)]"
+      className={strong
+        ? "flex h-11 w-11 items-center justify-center rounded-full bg-[#C6FF3D] shadow-[0_0_0_1px_#C6FF3D]"
+        : "flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[0_4px_12px_rgba(80,40,10,0.08)]"}
     >
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#241710" strokeWidth="2.4" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke={strong ? "#0B0D0F" : "#241710"} strokeWidth="2.8" aria-hidden="true">
         <path d="M15 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </button>

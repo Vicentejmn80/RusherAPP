@@ -408,11 +408,6 @@ export function BaseballAdminPage() {
       <p className="mb-4 max-w-[68ch] text-[14px] font-semibold leading-relaxed text-[var(--adm-muted)]">
         Publicar usa la liquidación que ya existe. El mismo marcador no suma puntos otra vez. Corregirlo revierte el movimiento anterior y aplica el nuevo.
       </p>
-      {legacy ? (
-        <p className="mb-4 rounded-[14px] border border-[var(--adm-line)] bg-[var(--adm-card)] px-4 py-3 text-[13px] font-bold leading-relaxed">
-          Falta activar la actualización de Resultados en el servidor. Mientras tanto se listan todos los partidos que la app puede leer, incluida la ronda en curso. El conteo de pronósticos llega con esa actualización.
-        </p>
-      ) : null}
       <Banner failure={failure} />
       {notice ? <Notice>{notice}</Notice> : null}
       <div className="mb-4 flex flex-wrap items-center gap-2">

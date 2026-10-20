@@ -73,11 +73,12 @@ export function StandingsTable({ rows }: { rows: StandingRow[]; excludedTies?: n
           <caption className="sr-only">Así van los equipos de la LVBP</caption>
           <thead className="text-[10px] uppercase tracking-wide text-[#8B93A5]">
             <tr>
-              <th className="w-[38%] py-2 text-left font-extrabold">Equipo</th>
-              <th className="py-2 font-extrabold">Racha</th>
-              <th className="py-2 font-extrabold">Últ 10</th>
-              <th className="py-2 font-extrabold">Casa</th>
-              <th className="py-2 font-extrabold">Ruta</th>
+              <th className="w-[42%] py-2 text-left font-extrabold">Equipo</th>
+              <th className="py-2 font-extrabold">JJ</th>
+              <th className="py-2 font-extrabold">JG</th>
+              <th className="py-2 font-extrabold">JP</th>
+              <th className="py-2 font-extrabold">AVE</th>
+              <th className="py-2 font-extrabold">DIF</th>
             </tr>
           </thead>
           <tbody>
@@ -103,15 +104,15 @@ export function StandingsTable({ rows }: { rows: StandingRow[]; excludedTies?: n
                           {delta > 0 ? <span className={leader ? "text-[#0B0D0F]" : "text-[#C6FF3D]"}>▲{delta}</span> : null}
                           {delta < 0 ? <span className="text-[#FF8A8A]">▼{Math.abs(delta)}</span> : null}
                         </span>
-                        <span className={`block text-[10px] font-bold tabular-nums ${leader ? "text-[#0B0D0F]" : "text-[#C9D0D6]"}`}>{row.played > 0 ? `${row.wins}-${row.losses}` : "0-0"}</span>
                         <span className={`block text-[10px] font-bold ${leader ? "text-[#0B0D0F]" : "text-[#8B93A5]"}`}>{open === row.id ? "Ocultar" : "Ver detalle"}</span>
                       </span>
                     </button>
                   </td>
-                  <td className="font-extrabold tabular-nums">{row.streak}</td>
-                  <td className="font-extrabold tabular-nums">{row.last10}</td>
-                  <td className="font-extrabold tabular-nums">{row.home}</td>
-                  <td className="font-extrabold tabular-nums">{row.away}</td>
+                  <td className="font-extrabold tabular-nums">{row.played}</td>
+                  <td className="font-extrabold tabular-nums">{row.wins}</td>
+                  <td className="font-extrabold tabular-nums">{row.losses}</td>
+                  <td className="font-extrabold tabular-nums">{formatWinPct(row.winPct).replace(/^0(?=\.)/, "")}</td>
+                  <td className="font-extrabold tabular-nums">{formatGamesBehind(row.gamesBehind)}</td>
                 </tr>
               );
             })}
@@ -120,7 +121,7 @@ export function StandingsTable({ rows }: { rows: StandingRow[]; excludedTies?: n
         {rows.map((row) => open === row.id ? (
           <div key={`${row.id}-detail`} className="mx-1 mb-2 rounded-[12px] bg-[#12161A] px-3 py-3 text-[12px] font-bold text-[#F4F6FA]">
             <p>{row.team} · puesto {row.rank}</p>
-            <p className="mt-1 text-[#8B93A5]">JJ {row.played} · G {row.wins} · P {row.losses} · PCT {formatWinPct(row.winPct)} · DIF {formatGamesBehind(row.gamesBehind)} · carreras {row.runDiff > 0 ? `+${row.runDiff}` : row.runDiff}</p>
+            <p className="mt-1 text-[#8B93A5]">Racha {row.streak} · últimos 10 {row.last10} · casa {row.home} · ruta {row.away} · carreras {row.runDiff > 0 ? `+${row.runDiff}` : row.runDiff}</p>
           </div>
         ) : null)}
       </div>

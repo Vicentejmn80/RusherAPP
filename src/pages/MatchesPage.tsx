@@ -4,12 +4,10 @@ import { LVBP_EXPERIENCE_TITLE } from "@/config/lvbpBrand";
 import { chosenWinner, TIE_PREDICTION_ERROR } from "@/config/scoring";
 import { PointsHint, openScoreGuide } from "@/components/tobo/ScoreGuide";
 import { mergeMatchWithSavedPrediction, settlementPollIntervalMs } from "@/lib/predictions/visibility";
-import { predictionBackTarget } from "@/lib/toboNav";
 import { cycleForMatchStart } from "@/lib/toboHome";
 import { LiveCenter, ShareLine } from "@/components/live/LiveCenter";
 import { MatchExtras } from "@/components/tobo/PilotExtras";
 import { BackButton, PrimaryButton } from "@/components/ui/Buttons";
-import { ToboBackHome } from "@/components/tobo/ToboBackHome";
 import { TabBar } from "@/components/ui/TabBar";
 import { matchCenter, type MatchCenter } from "@/services/liveApi";
 import { DemoExperience } from "@/components/demo/DemoExperience";
@@ -241,9 +239,9 @@ export function MatchPredictPage() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-3 px-5 pb-2 pt-[max(1rem,env(safe-area-inset-top))]">
-        <BackButton onClick={() => navigate(predictionBackTarget())} label={`Volver a ${LVBP_EXPERIENCE_TITLE}`} />
+        <BackButton strong onClick={() => navigate("/tobo/mi-quiniela")} label="Volver a pronósticos" />
         <div>
-          <p className="text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#FF4F1A]">← {LVBP_EXPERIENCE_TITLE}</p>
+          <p className="text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#C6FF3D]">{LVBP_EXPERIENCE_TITLE}</p>
           <p className="text-[14px] font-extrabold">Pronóstico</p>
         </div>
       </div>
@@ -304,7 +302,6 @@ export function MatchPredictPage() {
             {cycleName && <p className="mt-1 text-[12px] font-extrabold text-[#FF4F1A]">Puntos para {cycleName} según el inicio programado</p>}
             {saved && <p className="mt-3 text-[16px] font-extrabold">{scoreLine(match, saved.homeScore, saved.awayScore)}</p>}
             <PointsHint className="mt-4" />
-            <button type="button" onClick={openScoreGuide} className="mt-2 min-h-11 text-[13px] font-extrabold text-[#0B0D0F]">¿Cómo se calculan mis puntos?</button>
             <p className="mb-2 mt-5 text-[14px] font-extrabold">¿Quién gana?</p>
             <div className="grid grid-cols-2 gap-2">
               {[match.awayTeam, match.homeTeam].map((team) => (
@@ -356,10 +353,6 @@ export function MatchPredictPage() {
         {match && phase !== "live" && <MatchExtras matchId={match.id} />}
         {match && phase !== "live" && <MatchCrowd matchId={match.id} />}
         {error && phase !== "open" && <p className="mt-3 text-[13px] font-bold text-[#E23B2F]">{error}</p>}
-        <button type="button" onClick={openScoreGuide} className="mt-6 min-h-11 text-[14px] font-extrabold text-[#C6FF3D]">¿Cómo se calculan mis puntos?</button>
-        <div className="mt-2">
-          <ToboBackHome />
-        </div>
       </div>
     </div>
   );
