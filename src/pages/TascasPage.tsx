@@ -25,24 +25,28 @@ function VenueCard({ tasca, onView }: { tasca: Tasca; onView: () => void }) {
 
   return (
     <article
-      className="venue-card-in overflow-hidden rounded-[20px] shadow-[0_10px_24px_rgba(0,0,0,0.28)]"
+      className="venue-card-in rounded-[20px] shadow-[0_10px_24px_rgba(0,0,0,0.28)]"
       style={{ backgroundColor: "var(--t-card)", border: "1px solid var(--t-border)" }}
     >
       <div
-        className="flex flex-col items-center bg-[#000000] px-5 pb-[14px] pt-[18px]"
+        className="flex min-w-0 flex-col items-center rounded-t-[20px] bg-[#000000] px-4 py-6"
         style={{ borderBottom: "0.5px solid #3a3320" }}
       >
-        {tasca.logoUrl ? (
-          <img
-            src={tasca.logoUrl}
-            alt=""
-            className="h-[114px] w-auto max-w-full object-contain sm:h-[130px]"
-          />
-        ) : (
-          <span className="flex h-[114px] items-center justify-center text-[28px] font-medium text-white sm:h-[130px]">
-            {venueInitials(tasca.name)}
-          </span>
-        )}
+        <div className="relative flex w-full min-w-0 items-center justify-center">
+          <span aria-hidden="true" className="pointer-events-none absolute left-0 top-1/2 h-px w-8 -translate-y-1/2 bg-[#DDB04A]/50" />
+          <span aria-hidden="true" className="pointer-events-none absolute right-0 top-1/2 h-px w-8 -translate-y-1/2 bg-[#DDB04A]/50" />
+          {tasca.logoUrl ? (
+            <img
+              src={tasca.logoUrl}
+              alt=""
+              className="relative block h-[150px] w-auto min-w-0 max-w-[85%] shrink object-contain sm:h-[180px]"
+            />
+          ) : (
+            <span className="relative flex h-[150px] items-center justify-center text-[28px] font-medium text-white sm:h-[180px]">
+              {venueInitials(tasca.name)}
+            </span>
+          )}
+        </div>
         <h3 className="mt-2 max-w-full text-center text-[15px] font-medium leading-tight text-white">{tasca.name}</h3>
         {category ? <p className="mt-0.5 text-center text-[11px] font-medium text-[#9aa4ad]">{category}</p> : null}
         <span className="mt-2 rounded-[99px] bg-[#b8f53a] px-2 py-0.5 text-[11px] font-medium text-[#0b0f13]">Aliado oficial</span>
