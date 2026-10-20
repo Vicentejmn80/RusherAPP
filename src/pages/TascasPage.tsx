@@ -22,9 +22,9 @@ function VenueCard({ tasca, onView }: { tasca: Tasca; onView: () => void }) {
       style={{ backgroundColor: "var(--t-card)", border: "1px solid var(--t-border)" }}
     >
       {/* Photo / cover area */}
-      <div className="relative flex h-[148px] items-center justify-center overflow-hidden" style={{ background: "linear-gradient(160deg, #10140A 0%, #1A2408 55%, #0B0D0F 100%)" }}>
+      <div className="flex h-[188px] items-center justify-center overflow-hidden px-5" style={{ background: "linear-gradient(160deg, #10140A 0%, #1A2408 55%, #0B0D0F 100%)" }}>
         {tasca.logoUrl ? (
-          <img src={tasca.logoUrl} alt="" className="h-24 w-24 rounded-full object-contain ring-2 ring-[#C6FF3D]" />
+          <img src={tasca.logoUrl} alt="" className="max-h-[156px] w-full object-contain" />
         ) : (
           <span className="text-[28px] font-extrabold text-[#C6FF3D]">{tasca.name.slice(0, 1)}</span>
         )}
