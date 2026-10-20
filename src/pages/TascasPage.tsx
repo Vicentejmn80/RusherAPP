@@ -8,6 +8,13 @@ import { listCycles, listTascas, type Tasca, type ToboCycle } from "@/services/m
 import { LVBP_EXPERIENCE_TITLE, LVBP_SEASON_LABEL, LVBP_VENUES_TAB_LABEL } from "@/config/lvbpBrand";
 import { TOBO_ROUND_PRIZE_SUBTITLE } from "@/config/tobo";
 
+function venueInitials(name: string) {
+  const skip = new Set(["de", "del", "la", "las", "los", "el", "y"]);
+  const words = name.split(/\s+/).filter((part) => part && !skip.has(part.toLowerCase()));
+  const source = words.length > 0 ? words : name.split(/\s+/).filter(Boolean);
+  return source.slice(0, 2).map((part) => part[0]?.toUpperCase() ?? "").join("") || "A";
+}
+
 function VenueCard({ tasca, onView }: { tasca: Tasca; onView: () => void }) {
   const instagram = instagramLink(tasca.instagram || "");
   const whatsapp = whatsappLink(tasca.whatsapp || "");
@@ -21,41 +28,42 @@ function VenueCard({ tasca, onView }: { tasca: Tasca; onView: () => void }) {
       className="venue-card-in overflow-hidden rounded-[20px] shadow-[0_10px_24px_rgba(0,0,0,0.28)]"
       style={{ backgroundColor: "var(--t-card)", border: "1px solid var(--t-border)" }}
     >
-      {/* Photo / cover area */}
-      <div className="flex h-[188px] items-center justify-center overflow-hidden px-5" style={{ background: "linear-gradient(160deg, #10140A 0%, #1A2408 55%, #0B0D0F 100%)" }}>
+      <div
+        className="flex flex-col items-center bg-[#000000] px-5 pb-[14px] pt-[18px]"
+        style={{ borderBottom: "0.5px solid #3a3320" }}
+      >
         {tasca.logoUrl ? (
-          <img src={tasca.logoUrl} alt="" className="max-h-[156px] w-full object-contain" />
+          <img
+            src={tasca.logoUrl}
+            alt=""
+            className="h-[114px] w-auto max-w-full object-contain sm:h-[130px]"
+          />
         ) : (
-          <span className="text-[28px] font-extrabold text-[#C6FF3D]">{tasca.name.slice(0, 1)}</span>
+          <span className="flex h-[114px] items-center justify-center text-[28px] font-medium text-white sm:h-[130px]">
+            {venueInitials(tasca.name)}
+          </span>
         )}
-      </div>
-      <div className="flex items-start gap-3 px-4 pt-4">
-        <div className="min-w-0 flex-1">
-          <h3 className="text-[18px] font-extrabold leading-tight">{tasca.name}</h3>
-          {category ? <p className="text-[12px] font-semibold text-[#C9D0D6]">{category}</p> : null}
-        </div>
-        <span className="shrink-0 rounded-full bg-[#C6FF3D] px-2 py-1 text-[10px] font-extrabold text-[#0B0D0F]">Aliado oficial</span>
+        <h3 className="mt-2 max-w-full text-center text-[15px] font-medium leading-tight text-white">{tasca.name}</h3>
+        {category ? <p className="mt-0.5 text-center text-[11px] font-medium text-[#9aa4ad]">{category}</p> : null}
+        <span className="mt-2 rounded-[99px] bg-[#b8f53a] px-2 py-0.5 text-[11px] font-medium text-[#0b0f13]">Aliado oficial</span>
       </div>
 
-      {/* Body */}
       <div className="px-4 pb-4 pt-4 sm:px-6 lg:px-8">
-        {/* Prize */}
         {benefit ? (
-          <div className="mb-3 rounded-2xl px-4 py-3" style={{ backgroundColor: "var(--t-tint)" }}>
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.12em]" style={{ color: "var(--t-accent)" }}>Beneficio</p>
-            <p className="mt-0.5 text-[16px] font-extrabold">{benefit}</p>
-            <p className="mt-1 text-[12px] font-bold" style={{ color: "var(--t-muted)" }}>Escanea el QR en el local en tu primera visita para activar tu beneficio.</p>
+          <div className="mb-3 rounded-[8px] px-4 py-3" style={{ backgroundColor: "#16241a", border: "0.5px solid #2c4a2c" }}>
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#b8f53a]">Beneficio</p>
+            <p className="mt-0.5 text-[16px] font-extrabold text-[#d7dde2]">{benefit}</p>
+            <p className="mt-1 text-[12px] font-bold text-[#d7dde2]">Escanea el QR en el local en tu primera visita para activar tu beneficio.</p>
           </div>
         ) : null}
-        {address ? <p className="mb-3 text-[13px] font-semibold" style={{ color: "var(--t-muted)" }}>{address.split(", ").join(" · ")}</p> : null}
+        {address ? <p className="mb-3 text-[11px] font-medium text-[#9aa4ad]">{address.split(", ").join(" · ")}</p> : null}
 
-        {/* Action buttons */}
         <div className="grid grid-cols-2 gap-2">
           {instagram ? <a href={instagram} target="_blank" rel="noopener noreferrer" className="flex h-11 items-center justify-center gap-1.5 rounded-[14px] text-[13px] font-extrabold" style={{ backgroundColor: "var(--t-bg)", border: "1px solid var(--t-border)" }}><Camera className="h-4 w-4" /> Instagram</a> : null}
           {whatsapp ? <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="flex h-11 items-center justify-center gap-1.5 rounded-[14px] text-[13px] font-extrabold" style={{ backgroundColor: "var(--t-bg)", border: "1px solid var(--t-border)" }}><MessageCircle className="h-4 w-4" /> WhatsApp</a> : null}
           {mapsUrl ? <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex h-11 items-center justify-center gap-1.5 rounded-[14px] text-[13px] font-extrabold" style={{ backgroundColor: "var(--t-bg)", border: "1px solid var(--t-border)" }}><MapPin className="h-4 w-4" /> Cómo llegar</a> : null}
-          <button type="button" onClick={onView} className="flex h-11 items-center justify-center rounded-[14px] bg-[#C6FF3D] px-2 text-[13px] font-extrabold text-[#0B0D0F]">Escanear QR en el local</button>
         </div>
+        <button type="button" onClick={onView} className="mt-2 flex h-11 w-full items-center justify-center rounded-[14px] bg-[#C6FF3D] px-2 text-[13px] font-extrabold text-[#0B0D0F]">Escanear QR en el local</button>
       </div>
     </article>
   );
